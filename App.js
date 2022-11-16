@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   touchableMainView: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    marginBottom: 20,
   },
   borderLeft: {
     borderTopLeftRadius: 8,

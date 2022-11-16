@@ -1,21 +1,16 @@
-import {Text, StyleSheet} from 'react-native';
 import React from 'react';
 import FormContainer from './FormContainer';
+import FormInput from './FormInput';
+import FormSubmitBtn from './FormSubmitBtn';
 
 const LoginForm = () => {
   return (
     <FormContainer>
-      <Text style={styles.loginText}>Login</Text>
+      <FormInput placeholder="example@gmail.com" title="email" />
+      <FormInput placeholder="********" title="Password" />
+      <FormSubmitBtn title="Login" />
     </FormContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  loginText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'red',
-  },
-});
 
 export default LoginForm;
