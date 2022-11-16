@@ -1,51 +1,86 @@
-import React, {Component} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {useRef} from 'react';
+import {ScrollView, StyleSheet, View, Animated, Dimensions} from 'react-native';
 import FormHeader from './components/FormHeader';
 import FormSelectorBtn from './components/FormSelectorBtn';
 import LoginForm from './components/LoginForm';
 import SignUpForm from './components/SignUpForm';
 
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.mainView}>
-        <View style={styles.subView}>
-          <FormHeader
-            leftHeading="Welcome "
-            rightHeading="Back"
-            subHeading="Tony Stark!!"
-          />
-        </View>
-        <View style={styles.touchableMainView}>
-          <FormSelectorBtn
-            style={styles.borderLeft}
-            backgroundColor="rgba(27,27,51,1)"
-            title="Login"
-          />
-          <FormSelectorBtn
-            style={styles.borderRight}
-            backgroundColor="rgba(27,27,51,0.4)"
-            title="Sign up"
-          />
-        </View>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}>
-          <LoginForm />
-          <ScrollView>
-            <SignUpForm />
-          </ScrollView>
-        </ScrollView>
+const {width} = Dimensions.get('window');
+
+export default function App() {
+  const animation = useRef(new Animated.Value(0)).current;
+
+  const rightHeaderOpacity = animation.interpolate({
+    inputRange: [0, width],
+    outputRange: [1, 0],
+  });
+
+  const leftHeaderTranslateX = animation.interpolate({
+    inputRange: [0, width],
+    outputRange: [0, 40],
+  });
+
+  const leftHeaderTranslateY = animation.interpolate({
+    inputRange: [0, width],
+    outputRange: [0, -20],
+  });
+
+  const loginColorInterpolate = animation.interpolate({
+    inputRange: [0, width],
+    outputRange: ['rgba(27,27,51,1)', 'rgba(27,27,51,0.4)'],
+  });
+
+  const signUpColorInterpolate = animation.interpolate({
+    inputRange: [0, width],
+    outputRange: ['rgba(27,27,51,0.4)', 'rgba(27,27,51,1)'],
+  });
+
+  return (
+    <View style={styles.mainView}>
+      <View style={styles.subView}>
+        <FormHeader
+          leftHeading="Welcome  "
+          rightHeading="Back"
+          subHeading="Tony Stark!!"
+          rightHeaderOpacity={rightHeaderOpacity}
+          leftHeaderTranslateX={leftHeaderTranslateX}
+          leftHeaderTranslateY={leftHeaderTranslateY}
+        />
       </View>
-    );
-  }
+      <View style={styles.touchableMainView}>
+        <FormSelectorBtn
+          style={styles.borderLeft}
+          backgroundColor={loginColorInterpolate}
+          title="Login"
+        />
+        <FormSelectorBtn
+          style={styles.borderRight}
+          backgroundColor={signUpColorInterpolate}
+          title="Sign up"
+        />
+      </View>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{nativeEvent: {contentOffset: {x: animation}}}],
+          {useNativeDriver: false},
+        )}>
+        <LoginForm />
+        <ScrollView>
+          <SignUpForm />
+        </ScrollView>
+      </ScrollView>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   mainView: {
     flex: 1,
-    paddingTop: 60,
+    paddingTop: 120,
   },
   subView: {
     height: 80,
