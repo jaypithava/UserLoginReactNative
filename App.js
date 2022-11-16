@@ -13,7 +13,7 @@ export default class App extends Component {
           <FormHeader
             leftHeading="Welcome "
             rightHeading="Back"
-            subHeading="Hey Tony Stark!!"
+            subHeading="Tony Stark!!"
           />
         </View>
         <View style={styles.touchableMainView}>
@@ -33,7 +33,9 @@ export default class App extends Component {
           pagingEnabled
           showsHorizontalScrollIndicator={false}>
           <LoginForm />
-          <SignUpForm />
+          <ScrollView>
+            <SignUpForm />
+          </ScrollView>
         </ScrollView>
       </View>
     );
