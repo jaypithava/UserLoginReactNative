@@ -11,8 +11,6 @@ export default function App() {
   const animation = useRef(new Animated.Value(0)).current;
   const scrollView = useRef();
 
-  scrollView.current.scrollToEnd();
-
   const rightHeaderOpacity = animation.interpolate({
     inputRange: [0, width],
     outputRange: [1, 0],
@@ -37,7 +35,7 @@ export default function App() {
     inputRange: [0, width],
     outputRange: ['rgba(27,27,51,0.4)', 'rgba(27,27,51,1)'],
   });
-
+  // scrollView.current.scrollToEnd();
   return (
     <View style={styles.mainView}>
       <View style={styles.subView}>

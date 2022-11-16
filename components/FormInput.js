@@ -1,14 +1,15 @@
 import {Text, StyleSheet, TextInput} from 'react-native';
 import React from 'react';
 
-const FormInput = ({placeholder, title}) => {
+const FormInput = props => {
+  const {placeholder, label} = props;
   return (
     <>
-      <Text style={{fontWeight: 'bold'}}>{title}</Text>
+      <Text style={{fontWeight: 'bold'}}>{label}</Text>
       <TextInput
+        {...props}
         placeholder={placeholder}
         style={styles.emailText}
-        secureTextEntry={true}
       />
     </>
   );
